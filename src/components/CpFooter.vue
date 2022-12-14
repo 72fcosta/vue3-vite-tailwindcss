@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUpdated } from "vue"
+import { computed, onMounted, onUpdated } from "vue"
 import {
    Listbox,
    ListboxButton,
@@ -22,6 +22,8 @@ interface SelectedScheme {
    dark: Boolean
    label: String
 }
+
+const selectedScheme = { value: { dark: true } }
 
 const solveIsDark = (isDark: boolean) => {
    if (isDark) {
