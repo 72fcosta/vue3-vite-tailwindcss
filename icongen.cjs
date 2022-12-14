@@ -16,7 +16,7 @@ const options = {
 icongen("./app-icon.png", "./public/icons/", options).then(() => {
    fs.rename("./public/icons/app.ico", "./public/favicon.ico", () => {
       fs.unlink("./public/icons/favicon.ico", () => {
-         console.log("All generated.")
+         console.log("All generated :)")
       })
    })
 })
