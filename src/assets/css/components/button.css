@@ -1,0 +1,12 @@
+@layer components {
+   button,
+   [type="button"],
+   [type="reset"],
+   [type="submit"] {
+      background-color: theme("colors.slate.600");
+   }
+
+   .dark button {
+      background-color: theme("colors.blue.50");
+   }
+}
