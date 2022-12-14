@@ -1,5 +1,5 @@
-const fs = require("fs")
-const icongen = require("icon-gen")
+import fs from "fs"
+import icongen from "icon-gen"
 
 const options = {
    report: true,
