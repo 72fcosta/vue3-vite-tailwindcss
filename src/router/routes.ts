@@ -1,19 +1,17 @@
+import LyPublic from "@/layouts/LyPublic.vue"
+import PgHome from "@/pages/PgHome.vue"
+
 const routes = [
    {
       path: "/",
-      component: () => import("../layouts/LyPublic.vue"),
+      component: LyPublic,
       children: [
          {
-            name: "pgHome",
             path: "",
-            component: () => import("../pages/PgHome.vue"),
+            name: "pgHome",
+            component: PgHome,
          },
       ],
-   },
-   {
-      path: "/auth",
-      component: () => import("../layouts/LyAuth.vue"),
-      children: [],
    },
 ]
 
