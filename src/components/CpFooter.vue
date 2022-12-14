@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// import { computed, onMounted, onUpdated } from "vue"
+import { computed, onMounted, onUpdated } from "vue"
 import {
    Listbox,
    ListboxButton,
@@ -7,112 +7,108 @@ import {
    ListboxOption,
 } from "@headlessui/vue"
 import {
-   // BIconDisplay,
-   // BIconChevronUp,
-   // BIconMoonStars,
-   // BIconSun,
+   BIconDisplay,
+   BIconChevronUp,
+   BIconMoonStars,
+   BIconSun,
    BIconGithub,
    BIconClipboardHeart,
 } from "bootstrap-icons-vue"
 
-defineProps<{
-   msg: string
-}>()
-
 // data
-// interface SelectedScheme {
-//    id: Number
-//    system: String
-//    dark: Boolean
-//    label: String
-// }
+interface SelectedScheme {
+   id: Number
+   system: String
+   dark: Boolean
+   label: String
+}
 
-// const selectedScheme = { value: { dark: true } }
+const selectedScheme = { value: { dark: true } }
 
-// const solveIsDark = (isDark: boolean) => {
-//    if (isDark) {
-//       document.documentElement.classList.add("dark")
-//    } else {
-//       document.documentElement.classList.remove("dark")
-//    }
-//    selectedScheme.value.dark = isDark
-// }
+const solveIsDark = (isDark: boolean) => {
+   if (isDark) {
+      document.documentElement.classList.add("dark")
+   } else {
+      document.documentElement.classList.remove("dark")
+   }
+   selectedScheme.value.dark = isDark
+}
 
-// const systemThemeIsDark = window.matchMedia("(prefers-color-scheme: dark)")
-// const localStorageContent = localStorage.getItem("twColorScheme")
-// const isSystem = !localStorageContent
+const systemThemeIsDark = window.matchMedia("(prefers-color-scheme: dark)")
+const localStorageContent = localStorage.getItem("twColorScheme")
+const isSystem = !localStorageContent
 
-// const schemeOptions = [
-//    {
-//       index: 0,
-//       system: true,
-//       dark: systemThemeIsDark.matches,
-//       icon: BIconDisplay,
-//       label: "Sistema",
-//    },
-//    {
-//       index: 1,
-//       system: false,
-//       dark: true,
-//       icon: BIconMoonStars,
-//       label: "Escuro",
-//    },
-//    {
-//       index: 2,
-//       system: false,
-//       dark: false,
-//       icon: BIconSun,
-//       label: "Claro",
-//    },
-// ]
+const schemeOptions = [
+   {
+      index: 0,
+      system: true,
+      dark: systemThemeIsDark.matches,
+      icon: BIconDisplay,
+      label: "Sistema",
+   },
+   {
+      index: 1,
+      system: false,
+      dark: true,
+      icon: BIconMoonStars,
+      label: "Escuro",
+   },
+   {
+      index: 2,
+      system: false,
+      dark: false,
+      icon: BIconSun,
+      label: "Claro",
+   },
+]
 
-// systemThemeIsDark.addEventListener("change", (res) => {
-//    const isDark = res.matches
-//    solveIsDark(isDark)
-// })
+systemThemeIsDark.addEventListener("change", (res) => {
+   const isDark = res.matches
+   solveIsDark(isDark)
+})
 
-// const cTypeIcon = computed(() => {
-//    const typeIcon = selectedScheme.system ? BIconDisplay : BIconChevronUp
-//    return typeIcon
-// })
-// const cThemeIcon = computed(() => {
-//    const themeIcon = selectedScheme.dark ? BIconMoonStars : BIconSun
-//    return themeIcon
-// })
+const cTypeIcon = computed(() => {
+   const typeIcon = selectedScheme.system ? BIconDisplay : BIconChevronUp
+   return typeIcon
+})
+const cThemeIcon = computed(() => {
+   const themeIcon = selectedScheme.dark ? BIconMoonStars : BIconSun
+   return themeIcon
+})
 
-// // methods
-// const openMySite = () => {
-//    window.open("https://72fcosta.netlify.app", "_self")
-// }
-// const openMyRepo = () => {
-//    window.open("https://github.com/72fcosta/vue3-vite-tailwindcss", "_self")
-// }
+// methods
+const openMySite = () => {
+   window.open("https://72fcosta.netlify.app", "_self")
+}
+const openMyRepo = () => {
+   window.open("https://github.com/72fcosta/vue3-vite-tailwindcss", "_self")
+}
 
-// onMounted(() => {
-//    let indexSchemeOptions
-//    if (isSystem) {
-//       indexSchemeOptions = 0
-//    } else {
-//       indexSchemeOptions = localStorageContent === "dark" ? 1 : 2
-//    }
-//    selectedScheme.selectedScheme = schemeOptions[indexSchemeOptions]
-//    const isDark = selectedScheme.dark
-//    solveIsDark(isDark)
-// })
-// onUpdated(() => {
-//    const isDark = selectedScheme.value.dark
-//    if (selectedScheme.value.system) {
-//       localStorage.removeItem("twColorScheme")
-//    } else {
-//       localStorage.twColorScheme = isDark ? "dark" : "light"
-//    }
-//    solveIsDark(isDark)
-// })
+onMounted(() => {
+   let indexSchemeOptions
+   if (isSystem) {
+      indexSchemeOptions = 0
+   } else {
+      indexSchemeOptions = localStorageContent === "dark" ? 1 : 2
+   }
+   selectedScheme.selectedScheme = schemeOptions[indexSchemeOptions]
+   const isDark = selectedScheme.dark
+   solveIsDark(isDark)
+})
+onUpdated(() => {
+   const isDark = selectedScheme.value.dark
+   if (selectedScheme.value.system) {
+      localStorage.removeItem("twColorScheme")
+   } else {
+      localStorage.twColorScheme = isDark ? "dark" : "light"
+   }
+   solveIsDark(isDark)
+})
 </script>
 
 <template>
    <footer class="text-slate-50 dark:text-slate-600 bg-slate-300 py-4">
-      <!-- <div class="flex items-center justify-between mx-auto max-w-7xl px-2">
+      <div class="flex items-center justify-between mx-auto max-w-7xl px-2">
          <button
             class="flex h-10 ring-2 ring-slate-400 ring-offset-2 rounded-sm gap-x-2 px-3 py-2"
             @click="openMySite">
@@ -162,6 +158,6 @@ defineProps<{
                <BIconGithub class="h-5 w-5" />
             </button>
          </div>
-      </div> -->
+      </div>
    </footer>
 </template>
