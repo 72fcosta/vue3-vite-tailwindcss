@@ -1,6 +1,6 @@
 # vue3-vite-tailwindcss
 
-This template should help get you started developing with Vue 3 in Vite.
+This template should help get you started developing with Vue3 + Vite + Tailwindcss.
 
 ## Recommended IDE Setup
 
