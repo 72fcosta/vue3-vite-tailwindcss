@@ -1,6 +1,6 @@
 {
    "name": "vue3-vite-tailwindcss",
-   "version": "1.0.0",
+   "version": "0.9.5",
    "private": false,
    "scripts": {
       "dev": "vite",
