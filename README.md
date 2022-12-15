@@ -2,6 +2,24 @@
 
 This template should help get you started developing with Vue3 + Vite + Tailwindcss.
 
+## Features
+
+-  :white_large_square: Typescript
+-  :white_large_square: Zod
+-  :white_check_mark: Vue Router
+-  :white_check_mark: Pinia
+-  :white_check_mark: Axios
+-  :white_check_mark: Bootstrap Icons
+-  :white_check_mark: Prettier
+-  :white_check_mark: Eslint
+-  :white_check_mark: Netlify Ready
+-  :white_large_square: Vitest
+-  :white_check_mark: Cssnano
+-  :white_check_mark: Css autoprefixer
+-  :white_check_mark: Cssnano
+-  :white_check_mark: Bootstrap Icons
+-  :white_check_mark: Icon-gen
+
 ## Recommended IDE Setup
 
 -  [VSCode](https://code.visualstudio.com/)
@@ -54,14 +72,6 @@ npm run test:unit
 ```sh
 npm run lint
 ```
-
-## Features
-
--  :white_large_square: Typescript
--  :white_check_mark: Vue Router
--  :white_check_mark: Pinia
--  :white_check_mark: Axios
--  :white_check_mark: Bootstrap Icons
 
 ## License
 
