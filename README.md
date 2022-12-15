@@ -52,3 +52,7 @@ npm run test:unit
 ```sh
 npm run lint
 ```
+
+## License
+
+[MIT](https://github.com/72fcosta/vue3-vite-tailwindcss/blob/master/LICENSE.md)
