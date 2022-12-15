@@ -13,7 +13,6 @@ This template should help get you started developing with Vue3 + Vite + Tailwind
 -  :white_check_mark: Eslint
 -  :white_check_mark: Netlify Ready
 -  :white_large_square: Vitest
--  :white_check_mark: Cssnano
 -  :white_check_mark: Css autoprefixer
 -  :white_check_mark: Cssnano
 -  :white_check_mark: Bootstrap Icons
