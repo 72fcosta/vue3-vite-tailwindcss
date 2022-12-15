@@ -9,7 +9,6 @@ This template should help get you started developing with Vue3 + Vite + Tailwind
 -  :white_check_mark: Vue Router
 -  :white_check_mark: Pinia
 -  :white_check_mark: Axios
--  :white_check_mark: Bootstrap Icons
 -  :white_check_mark: Prettier
 -  :white_check_mark: Eslint
 -  :white_check_mark: Netlify Ready
