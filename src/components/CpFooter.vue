@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, onMounted, onUpdated } from "vue"
+import { ref, computed, onMounted, onUpdated } from "vue"
+import { z } from "zod"
 import {
    Listbox,
    ListboxButton,
@@ -15,30 +16,8 @@ import {
    BIconClipboardHeart,
 } from "bootstrap-icons-vue"
 
-// data
-interface SelectedScheme {
-   id: Number
-   system: String
-   dark: Boolean
-   label: String
-}
-
-const selectedScheme = { value: { dark: true } }
-
-const solveIsDark = (isDark: boolean) => {
-   if (isDark) {
-      document.documentElement.classList.add("dark")
-   } else {
-      document.documentElement.classList.remove("dark")
-   }
-   selectedScheme.value.dark = isDark
-}
-
 const systemThemeIsDark = window.matchMedia("(prefers-color-scheme: dark)")
-const localStorageContent = localStorage.getItem("twColorScheme")
-const isSystem = !localStorageContent
-
-const schemeOptions = [
+const themeOptions = [
    {
       index: 0,
       system: true,
@@ -62,18 +41,39 @@ const schemeOptions = [
    },
 ]
 
+// themeSel
+const themeSchema = z.object({
+   id: z.number().default(-1),
+   system: z.boolean().default(false),
+   dark: z.boolean().default(false),
+   label: z.string().default(""),
+})
+
+let themeSel = ref(themeSchema.parse({}))
+console.log("🛸 > file: CpFooter.vue:55 > themeSel", themeSel)
+
+const curTypeIcon = computed(() => {
+   const typeIcon = themeSel.value.system ? BIconDisplay : BIconChevronUp
+   return typeIcon
+})
+const curThemeIcon = computed(() => {
+   const themeIcon = themeSel.value.dark ? BIconMoonStars : BIconSun
+   return themeIcon
+})
+
+// solveIsDark
+const solveIsDark = (isDark: boolean) => {
+   if (isDark) {
+      document.documentElement.classList.add("dark")
+   } else {
+      document.documentElement.classList.remove("dark")
+   }
+   if (themeSel.value) themeSel.value.dark = isDark
+}
+
 systemThemeIsDark.addEventListener("change", (res) => {
    const isDark = res.matches
    solveIsDark(isDark)
-})
-
-const cTypeIcon = computed(() => {
-   const typeIcon = selectedScheme.system ? BIconDisplay : BIconChevronUp
-   return typeIcon
-})
-const cThemeIcon = computed(() => {
-   const themeIcon = selectedScheme.dark ? BIconMoonStars : BIconSun
-   return themeIcon
 })
 
 // methods
@@ -85,19 +85,24 @@ const openMyRepo = () => {
 }
 
 onMounted(() => {
-   let indexSchemeOptions
+   const localStorageContent = localStorage.getItem("twColorScheme")
+   const isSystem = !localStorageContent
+   let themeOptionsIndex
    if (isSystem) {
-      indexSchemeOptions = 0
+      themeOptionsIndex = 0
    } else {
-      indexSchemeOptions = localStorageContent === "dark" ? 1 : 2
+      themeOptionsIndex = localStorageContent === "dark" ? 1 : 2
    }
-   selectedScheme.selectedScheme = schemeOptions[indexSchemeOptions]
-   const isDark = selectedScheme.dark
+   console.log("🛸 > file: CpFooter.vue:100 > themeOptionsIndex", themeOptionsIndex)
+   console.log("🛸 > file: CpFooter.vue:101 > ", themeOptions[themeOptionsIndex])
+
+   themeSel.value = themeSchema.parse(themeOptions[themeOptionsIndex])
+   const isDark = themeSel.value.dark
    solveIsDark(isDark)
 })
 onUpdated(() => {
-   const isDark = selectedScheme.value.dark
-   if (selectedScheme.value.system) {
+   const isDark = themeSel.value.dark
+   if (themeSel.value.system) {
       localStorage.removeItem("twColorScheme")
    } else {
       localStorage.twColorScheme = isDark ? "dark" : "light"
@@ -117,12 +122,12 @@ onUpdated(() => {
          </button>
 
          <div class="flex items-center justify-between gap-x-3">
-            <Listbox v-model="selectedScheme">
+            <Listbox v-model="themeSel">
                <div class="relative">
                   <ListboxButton
                      class="flex h-10 items-center justify-center ring-2 ring-slate-400 ring-offset-2 rounded-sm gap-x-2 px-3 py-2">
-                     <Component :is="cTypeIcon" class="h-5 w-5" />
-                     <Component :is="cThemeIcon" class="h-5 w-5" />
+                     <Component :is="curTypeIcon" class="h-5 w-5" />
+                     <Component :is="curThemeIcon" class="h-5 w-5" />
                   </ListboxButton>
                   <transition
                      enter-active-class="transition duration-200 ease-out"
@@ -135,16 +140,16 @@ onUpdated(() => {
                         class="absolute w-48 mb-6 bottom-full -right-3/4 bg-slate-300 rounded-md px-2">
                         <ListboxOption
                            v-slot="{ selected }"
-                           v-for="scheme in schemeOptions"
-                           :key="scheme.index"
-                           :value="scheme"
+                           v-for="theme in themeOptions"
+                           :key="theme.index"
+                           :value="theme"
                            as="template"
                            class="my-3">
                            <li
                               :class="selected ? 'ring-blue-500' : 'ring-slate-300'"
                               class="flex cursor-pointer bg-slate-50 text-slate-600 h-10 items-center ring-2 ring-offset-2 rounded-sm gap-x-2 px-3 py-2">
-                              <Component :is="scheme.icon" class="h-5 w-5" />
-                              <div class="text-b">{{ scheme.label }}</div>
+                              <Component :is="theme.icon" class="h-5 w-5" />
+                              <div class="text-b">{{ theme.label }}</div>
                            </li>
                         </ListboxOption>
                      </ListboxOptions>
