@@ -12,10 +12,12 @@ This template should help get you started developing with Vue3 + Vite + Tailwind
 -  :white_check_mark: Prettier
 -  :white_check_mark: Eslint
 -  :white_large_square: Vitest
+-  :white_check_mark: Css remove unused
 -  :white_check_mark: Css autoprefixer
 -  :white_check_mark: Cssnano
 -  :white_check_mark: Bootstrap Icons
 -  :white_check_mark: Icon-gen
+-  :white_check_mark: Dark Mode Ready
 -  :white_check_mark: Netlify Ready
 
 ## Recommended IDE Setup
