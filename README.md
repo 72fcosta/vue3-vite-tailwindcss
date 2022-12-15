@@ -4,11 +4,11 @@ This template should help get you started developing with Vue3 + Vite + Tailwind
 
 ## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/)
-[Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur)
-[TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin)
-[JavaScript and TypeScript Nightly](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-next)
-[Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
+-  [VSCode](https://code.visualstudio.com/)
+-  [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur)
+-  [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin)
+-  [JavaScript and TypeScript Nightly](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-next)
+-  [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
 
 ## Type Support for `.vue` Imports in TS
 
@@ -54,6 +54,14 @@ npm run test:unit
 ```sh
 npm run lint
 ```
+
+## Features
+
+-  :white_large_square: Typescript
+-  :white_check_mark: Vue Router
+-  :white_check_mark: Pinia
+-  :white_check_mark: Axios
+-  :white_check_mark: Bootstrap Icons
 
 ## License
 
