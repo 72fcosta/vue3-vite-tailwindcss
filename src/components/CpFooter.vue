@@ -37,7 +37,7 @@ console.log("🛸 > file: CpFooter.vue:36 > themeSel", themeSel.value)
 
 // 🎯computed
 const systemIsDark = computed(() => systemTheme.value.matches)
-console.log("🛸 > file: CpFooter.vue:64 > systemIsDark", systemIsDark.value)
+console.log("🛸 > file: CpFooter.vue:40 > systemIsDark", systemIsDark.value)
 
 const btnIconType = computed(() => {
    const btnIconType = themeSel.value.system ? BIconDisplay : BIconChevronUp
@@ -57,26 +57,26 @@ const themeOptions = [
       index: 0,
       system: true,
       dark: systemIsDark,
-      icon: BIconDisplay,
+      iconName: "BIconDisplay",
       label: "Sistema",
    },
    {
       index: 1,
       system: false,
       dark: true,
-      icon: BIconMoonStars,
+      iconName: "BIconMoonStars",
       label: "Escuro",
    },
    {
       index: 2,
       system: false,
       dark: false,
-      icon: BIconSun,
+      iconName: "BIconSun",
       label: "Claro",
    },
 ]
 
-// methods
+// 🍄methods
 const solveIsDark = (isDark: boolean) => {
    if (isDark) {
       document.documentElement.classList.add("dark")
@@ -160,7 +160,7 @@ onUpdated(() => {
                            <li
                               :class="selected ? 'ring-blue-500' : 'ring-slate-300'"
                               class="flex cursor-pointer bg-slate-50 text-slate-600 h-10 items-center ring-2 ring-offset-2 rounded-sm gap-x-2 px-3 py-2">
-                              <Component :is="theme.icon" class="h-5 w-5" />
+                              <Component :is="theme.iconName" class="h-5 w-5" />
                               <div class="text-b">{{ theme.label }}</div>
                            </li>
                         </ListboxOption>
