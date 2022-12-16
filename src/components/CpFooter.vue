@@ -120,7 +120,7 @@ onMounted(() => {
 
 onUpdated(() => {
    console.log("🛸 > onUpdated 🖐")
-   solveAppTheme()
+   // solveAppTheme()
 })
 </script>
 
