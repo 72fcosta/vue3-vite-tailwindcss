@@ -22,6 +22,7 @@ systemThemeIsDark.addEventListener("change", (res) => {
    solveIsDark(isDark)
 })
 
+// data
 const themeOptions = [
    {
       index: 0,
