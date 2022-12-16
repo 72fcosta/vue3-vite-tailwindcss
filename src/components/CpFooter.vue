@@ -56,15 +56,6 @@ const themeSchema = z.object({
 let themeSel = ref(themeSchema.parse({}))
 console.log("🛸 > file: CpFooter.vue:52 > themeSel", themeSel.value)
 
-const solveIsDark = (isDark: boolean) => {
-   if (isDark) {
-      document.documentElement.classList.add("dark")
-   } else {
-      document.documentElement.classList.remove("dark")
-   }
-   if (themeSel.value) themeSel.value.dark = isDark
-}
-
 // computed
 const iconType = computed(() => {
    const iconType = themeSel.value.system ? BIconDisplay : BIconChevronUp
@@ -76,6 +67,15 @@ const iconTheme = computed(() => {
 })
 
 // methods
+const solveIsDark = (isDark: boolean) => {
+   if (isDark) {
+      document.documentElement.classList.add("dark")
+   } else {
+      document.documentElement.classList.remove("dark")
+   }
+   if (themeSel.value) themeSel.value.dark = isDark
+}
+
 const openMySite = () => {
    window.open("https://72fcosta.netlify.app", "_self")
 }
