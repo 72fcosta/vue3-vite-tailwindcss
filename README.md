@@ -11,7 +11,7 @@ This template should help get you started developing with Vue3 + Vite + Tailwind
 -  :white_check_mark: Axios
 -  :white_check_mark: Prettier
 -  :white_check_mark: Eslint
--  :white_large_square: Vitest
+-  :white_check_mark: Vitest
 -  :white_check_mark: Css remove unused
 -  :white_check_mark: Css autoprefixer
 -  :white_check_mark: Cssnano
