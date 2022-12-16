@@ -100,14 +100,17 @@ onMounted(() => {
       const isDark = res.matches
       solveIsDark(isDark)
    })
+
    const localStorageContent = localStorage.getItem("twColorScheme")
    const isSystem = !localStorageContent
+
    let themeOptionsIndex
    if (isSystem) {
       themeOptionsIndex = 0
    } else {
       themeOptionsIndex = localStorageContent === "dark" ? 1 : 2
    }
+
    themeSel.value = themeSchema.parse(themeOptions[themeOptionsIndex])
    const isDark = themeSel.value.dark
    solveIsDark(isDark)
