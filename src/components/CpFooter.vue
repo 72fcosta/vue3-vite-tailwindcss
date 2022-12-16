@@ -17,6 +17,11 @@ import {
 } from "bootstrap-icons-vue"
 
 const systemThemeIsDark = window.matchMedia("(prefers-color-scheme: dark)")
+systemThemeIsDark.addEventListener("change", (res) => {
+   const isDark = res.matches
+   solveIsDark(isDark)
+})
+
 const themeOptions = [
    {
       index: 0,
@@ -41,7 +46,6 @@ const themeOptions = [
    },
 ]
 
-// themeSel
 const themeSchema = z.object({
    id: z.number().default(-1),
    system: z.boolean().default(false),
@@ -50,18 +54,8 @@ const themeSchema = z.object({
 })
 
 let themeSel = ref(themeSchema.parse({}))
-console.log("🛸 > file: CpFooter.vue:55 > themeSel", themeSel)
+console.log("🛸 > file: CpFooter.vue:52 > themeSel", themeSel.value)
 
-const curTypeIcon = computed(() => {
-   const typeIcon = themeSel.value.system ? BIconDisplay : BIconChevronUp
-   return typeIcon
-})
-const curThemeIcon = computed(() => {
-   const themeIcon = themeSel.value.dark ? BIconMoonStars : BIconSun
-   return themeIcon
-})
-
-// solveIsDark
 const solveIsDark = (isDark: boolean) => {
    if (isDark) {
       document.documentElement.classList.add("dark")
@@ -71,9 +65,14 @@ const solveIsDark = (isDark: boolean) => {
    if (themeSel.value) themeSel.value.dark = isDark
 }
 
-systemThemeIsDark.addEventListener("change", (res) => {
-   const isDark = res.matches
-   solveIsDark(isDark)
+// computed
+const iconType = computed(() => {
+   const iconType = themeSel.value.system ? BIconDisplay : BIconChevronUp
+   return iconType
+})
+const iconTheme = computed(() => {
+   const iconTheme = themeSel.value.dark ? BIconMoonStars : BIconSun
+   return iconTheme
 })
 
 // methods
@@ -93,9 +92,6 @@ onMounted(() => {
    } else {
       themeOptionsIndex = localStorageContent === "dark" ? 1 : 2
    }
-   console.log("🛸 > file: CpFooter.vue:100 > themeOptionsIndex", themeOptionsIndex)
-   console.log("🛸 > file: CpFooter.vue:101 > ", themeOptions[themeOptionsIndex])
-
    themeSel.value = themeSchema.parse(themeOptions[themeOptionsIndex])
    const isDark = themeSel.value.dark
    solveIsDark(isDark)
@@ -126,8 +122,8 @@ onUpdated(() => {
                <div class="relative">
                   <ListboxButton
                      class="flex h-10 items-center justify-center ring-2 ring-slate-400 ring-offset-2 rounded-sm gap-x-2 px-3 py-2">
-                     <Component :is="curTypeIcon" class="h-5 w-5" />
-                     <Component :is="curThemeIcon" class="h-5 w-5" />
+                     <Component :is="iconType" class="h-5 w-5" />
+                     <Component :is="iconTheme" class="h-5 w-5" />
                   </ListboxButton>
                   <transition
                      enter-active-class="transition duration-200 ease-out"
