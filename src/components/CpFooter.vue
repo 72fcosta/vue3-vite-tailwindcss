@@ -35,12 +35,28 @@ console.log("🛸 > file: CpFooter.vue:33 > systemTheme", systemTheme.value)
 const themeSel = ref(themeSchema.parse({}))
 console.log("🛸 > file: CpFooter.vue:36 > themeSel", themeSel.value)
 
+// 🎯computed
+const systemIsDark = computed(() => systemTheme.value.matches)
+console.log("🛸 > file: CpFooter.vue:64 > systemIsDark", systemIsDark.value)
+
+const btnIconType = computed(() => {
+   const btnIconType = themeSel.value.system ? BIconDisplay : BIconChevronUp
+   return btnIconType
+})
+console.log("🛸 > file: CpFooter.vue:46 > btnIconType", btnIconType.value)
+
+const iconTheme = computed(() => {
+   const iconTheme = themeSel.value.dark ? BIconMoonStars : BIconSun
+   return iconTheme
+})
+console.log("🛸 > file: CpFooter.vue:52 > iconTheme", iconTheme.value)
+
 // ⭐data
 const themeOptions = [
    {
       index: 0,
       system: true,
-      dark: systemTheme,
+      dark: systemIsDark,
       icon: BIconDisplay,
       label: "Sistema",
    },
@@ -59,20 +75,6 @@ const themeOptions = [
       label: "Claro",
    },
 ]
-
-// computed
-const systemIsDark = computed(() => systemTheme.value.matches)
-console.log("🛸 > file: CpFooter.vue:64 > systemIsDark", systemIsDark.value)
-
-const iconType = computed(() => {
-   const iconType = themeSel.value.system ? BIconDisplay : BIconChevronUp
-   return iconType
-})
-
-const iconTheme = computed(() => {
-   const iconTheme = themeSel.value.dark ? BIconMoonStars : BIconSun
-   return iconTheme
-})
 
 // methods
 const solveIsDark = (isDark: boolean) => {
@@ -136,7 +138,7 @@ onUpdated(() => {
                <div class="relative">
                   <ListboxButton
                      class="flex h-10 items-center justify-center ring-2 ring-slate-400 ring-offset-2 rounded-sm gap-x-2 px-3 py-2">
-                     <Component :is="iconType" class="h-5 w-5" />
+                     <Component :is="btnIconType" class="h-5 w-5" />
                      <Component :is="iconTheme" class="h-5 w-5" />
                   </ListboxButton>
                   <transition
