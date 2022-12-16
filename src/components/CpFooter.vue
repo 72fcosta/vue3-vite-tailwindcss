@@ -16,9 +16,9 @@ import {
    BIconClipboardHeart,
 } from "bootstrap-icons-vue"
 
-// 🚀schema
+// 🚀Schema
 const themeSchema = z.object({
-   id: z.number().default(-1),
+   id: z.string().default(""),
    system: z.boolean().default(false),
    dark: z.boolean().default(false),
    label: z.string().default(""),
@@ -28,14 +28,14 @@ const systemThemeSchema = z.object({
    matches: z.boolean().default(false),
 })
 
-// ⚡reactive data
+// ⚡Reactive Data
 const systemTheme = ref(systemThemeSchema.parse({}))
 console.log("🛸 > file: CpFooter.vue:33 > systemTheme", systemTheme.value)
 
 const themeSel = ref(themeSchema.parse({}))
 console.log("🛸 > file: CpFooter.vue:36 > themeSel", themeSel.value)
 
-// 🎯computed
+// 🎯Computed
 const systemIsDark = computed(() => systemTheme.value.matches)
 console.log("🛸 > file: CpFooter.vue:40 > systemIsDark", systemIsDark.value)
 
@@ -51,24 +51,24 @@ const iconTheme = computed(() => {
 })
 console.log("🛸 > file: CpFooter.vue:52 > iconTheme", iconTheme.value)
 
-// ⭐data
+// ⭐Data
 const themeOptions = [
    {
-      index: 0,
+      id: "system",
       system: true,
       dark: systemIsDark,
       iconName: "BIconDisplay",
       label: "Sistema",
    },
    {
-      index: 1,
+      id: "dark",
       system: false,
       dark: true,
       iconName: "BIconMoonStars",
       label: "Escuro",
    },
    {
-      index: 2,
+      id: "light",
       system: false,
       dark: false,
       iconName: "BIconSun",
@@ -76,7 +76,7 @@ const themeOptions = [
    },
 ]
 
-// 🍄methods
+// 🍄Methods
 const solveIsDark = (isDark: boolean) => {
    if (isDark) {
       document.documentElement.classList.add("dark")
@@ -93,7 +93,7 @@ const openMyRepo = () => {
    window.open("https://github.com/72fcosta/vue3-vite-tailwindcss", "_self")
 }
 
-// 🕒lifecycles
+// 🕒Lifecycles
 onMounted(() => {
    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
    systemTheme.addEventListener("change", (res) => {
