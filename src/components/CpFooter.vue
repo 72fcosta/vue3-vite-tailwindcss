@@ -92,17 +92,21 @@ const solveClassTheme = async () => {
 }
 
 const solveAppTheme = async () => {
-   let themeId = ""
-   await solveLocalStorageTheme()
-   if (getThemeFrom.value === "system") {
-      themeId = "system"
-      await solveSystemTheme()
-   } else {
-      themeId = localStorageIsDark.value ? "dark" : "light"
-   }
-   await solveClassTheme()
+   console.log("🛸 > solveAppTheme 🖐")
    const appThemeCur = themeOptions.find((item) => item.id === themeId)
    appTheme.value = appThemeSchema.parse(appThemeCur)
+}
+
+const onSelectAppTheme = async (idTheme: string) => {
+   if (idTheme === "system") {
+      localStorage.removeItem("twColorScheme")
+      await solveSystemTheme()
+      await solveClassTheme()
+      console.log("🛸 > onSelectAppTheme 🖐", idTheme)
+   } else {
+      localStorage.setItem("twColorScheme", "dark")
+      console.log("🛸 > onSelectAppTheme 🖐", idTheme)
+   }
 }
 
 const openMySite = () => {
@@ -113,9 +117,12 @@ const openMyRepo = () => {
 }
 
 // 🕒Lifecycles
-onMounted(() => {
+onMounted(async () => {
    console.log("🛸 > onMounted 🖐")
-   solveAppTheme()
+   await solveLocalStorageTheme()
+   await solveSystemTheme()
+   await solveClassTheme()
+   await solveAppTheme()
 })
 </script>
 
@@ -155,7 +162,8 @@ onMounted(() => {
                            class="my-3">
                            <li
                               :class="selected ? 'ring-blue-500' : 'ring-slate-300'"
-                              class="flex cursor-pointer bg-slate-50 text-slate-600 h-10 items-center ring-2 ring-offset-2 rounded-sm gap-x-2 px-3 py-2">
+                              class="flex cursor-pointer bg-slate-50 text-slate-600 h-10 items-center ring-2 ring-offset-2 rounded-sm gap-x-2 px-3 py-2"
+                              @click="onSelectAppTheme(theme.id)">
                               <Component :is="theme.icon" class="h-5 w-5" />
                               <div class="text-b">{{ theme.label }}</div>
                            </li>
