@@ -97,23 +97,22 @@ const solveAppTheme = async () => {
    appTheme.value = appThemeSchema.parse(appThemeCur)
 }
 
-const onSelectAppTheme = async (idTheme: string) => {
-   if (idTheme === "system") {
-      localStorage.removeItem("twColorScheme")
-      await solveSystemTheme()
-      await solveClassTheme()
-      console.log("🛸 > onSelectAppTheme 🖐", idTheme)
-   } else {
-      localStorage.setItem("twColorScheme", "dark")
-      console.log("🛸 > onSelectAppTheme 🖐", idTheme)
-   }
-}
-
 const openMySite = () => {
    window.open("https://72fcosta.netlify.app", "_self")
 }
 const openMyRepo = () => {
    window.open("https://github.com/72fcosta/vue3-vite-tailwindcss", "_self")
+}
+
+const onSelectAppTheme = async (idTheme: string) => {
+   console.log("🛸 > onSelectAppTheme 🖐")
+   if (idTheme === "system") {
+      localStorage.removeItem("twColorScheme")
+      await solveSystemTheme()
+      await solveClassTheme()
+   } else {
+      localStorage.setItem("twColorScheme", "dark")
+   }
 }
 
 // 🕒Lifecycles
