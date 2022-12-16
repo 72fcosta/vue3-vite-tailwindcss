@@ -93,13 +93,13 @@ const openMyRepo = () => {
    window.open("https://github.com/72fcosta/vue3-vite-tailwindcss", "_self")
 }
 
+// 🕒lifecycles
 onMounted(() => {
    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
    systemTheme.addEventListener("change", (res) => {
       const isDark = res.matches
       solveIsDark(isDark)
    })
-
    const localStorageContent = localStorage.getItem("twColorScheme")
    const isSystem = !localStorageContent
    let themeOptionsIndex
@@ -112,6 +112,7 @@ onMounted(() => {
    const isDark = themeSel.value.dark
    solveIsDark(isDark)
 })
+
 onUpdated(() => {
    const isDark = themeSel.value.dark
    if (themeSel.value.system) {
