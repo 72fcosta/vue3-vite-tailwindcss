@@ -114,25 +114,13 @@ const openMyRepo = () => {
 
 // 🕒Lifecycles
 onMounted(() => {
-   // const themeIdCur = isSystem ? "system" : localStorageContent
-   // const appThemeCur = themeOptions.find((item) => item.id === themeIdCur)
-   // appTheme.value = appThemeSchema.parse(appThemeCur)
-
-   // const id = appTheme.value.id
-   // let isDark = null
-   // if (id === "system") {
-   //    isDark = systemThemeIsDark
-   // } else {
-   //    isDark = id === "dark"
-   // }
-
+   console.log("🛸 > onMounted 🖐")
    solveAppTheme()
-
-   // solveIsDark(id, isDark)
 })
 
 onUpdated(() => {
-   console.log("🛸 > file: CpFooter.vue > onUpdated 🖐")
+   console.log("🛸 > onUpdated 🖐")
+   solveAppTheme()
 })
 </script>
 
