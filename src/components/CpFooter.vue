@@ -117,11 +117,6 @@ onMounted(() => {
    console.log("🛸 > onMounted 🖐")
    solveAppTheme()
 })
-
-onUpdated(() => {
-   console.log("🛸 > onUpdated 🖐")
-   // solveAppTheme()
-})
 </script>
 
 <template>
