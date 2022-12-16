@@ -17,66 +17,92 @@ import {
 } from "bootstrap-icons-vue"
 
 // 🚀Schema
-const appThemeSchema = z.object({
-   id: z.string().default(""),
-   system: z.boolean().default(false),
-   dark: z.boolean().default(false),
-   iconName: z.string().default(""),
-   label: z.string().default(""),
+const localStorageThemeSchema = z.object({
+   has: z.boolean().default(false),
+   matches: z.boolean().default(false),
 })
 
 const systemThemeSchema = z.object({
    matches: z.boolean().default(false),
 })
 
-const localStorageThemeSchema = z.object({
-   matches: z.boolean().default(false),
+const appThemeSchema = z.object({
+   id: z.string().default(""),
+   label: z.string().default(""),
 })
 
 // ⚡Reactive Data
-const systemTheme = ref(systemThemeSchema.parse({}))
 const localStorageTheme = ref(localStorageThemeSchema.parse({}))
-const themeSel = ref(appThemeSchema.parse({}))
+const systemTheme = ref(systemThemeSchema.parse({}))
+const appTheme = ref(appThemeSchema.parse({}))
 
 // 🎯Computed
-const isSystemDark = computed(() => systemTheme.value.matches)
-console.log("🛸 > file: CpFooter.vue > isSystemDark", isSystemDark.value)
+const hasLocalStorageTheme = computed(() => localStorageTheme.value.has)
 
-const isLocalStorageDark = computed(() => localStorageTheme.value.matches)
-console.log("🛸 > file: CpFooter.vue > isLocalStorageDark", isLocalStorageDark.value)
+const getThemeFrom = computed(() => {
+   return hasLocalStorageTheme.value ? "localStorage" : "system"
+})
+
+const localStorageIsDark = computed(() => localStorageTheme.value.matches)
+
+const systemIsDark = computed(() => systemTheme.value.matches)
+
+const appIsDark = computed(() => {
+   if (hasLocalStorageTheme.value) {
+      return localStorageIsDark
+   } else {
+      return systemIsDark
+   }
+})
 
 const btnIconType = computed(() => {
-   const btnIconType = themeSel.value.system ? BIconDisplay : BIconChevronUp
+   const btnIconType = getThemeFrom.value === "system" ? BIconDisplay : BIconChevronUp
    return btnIconType
 })
 
-const iconTheme = computed(() => {
-   const iconTheme = themeSel.value.dark ? BIconMoonStars : BIconSun
-   return iconTheme
-})
+const iconTheme = computed(() => (appIsDark.value ? BIconMoonStars : BIconSun))
 
 // ⭐Data
 const themeOptions = [
-   { id: "system", label: "Sistema", iconName: "BIconDisplay" },
-   { id: "dark", label: "Escuro", iconName: "BIconMoonStars" },
-   { id: "light", label: "Claro", iconName: "BIconSun" },
+   { id: "system", label: "Sistema", icon: BIconDisplay },
+   { id: "dark", label: "Escuro", icon: BIconMoonStars },
+   { id: "light", label: "Claro", icon: BIconSun },
 ]
 
 // 🍄Methods
-const solveIsDark = (id: string, isDark: boolean) => {
-   console.log("🛸 > file: CpFooter.vue:76 > solveIsDark", id, isDark)
-   // set class
-   if (isDark) {
+const solveLocalStorageTheme = async () => {
+   console.log("🛸 > solveLocalStorageTheme 🖐")
+   const solvedLocalStorageTheme = localStorage.getItem("twColorScheme") || {}
+   localStorageTheme.value = localStorageThemeSchema.parse(solvedLocalStorageTheme)
+}
+
+const solveSystemTheme = async () => {
+   console.log("🛸 > solveSystemTheme 🖐")
+   const solvedSystemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+   systemTheme.value = systemThemeSchema.parse(solvedSystemTheme)
+}
+
+const solveClassTheme = async () => {
+   console.log("🛸 > solveClassTheme 🖐")
+   if (systemIsDark.value) {
       document.documentElement.classList.add("dark")
    } else {
       document.documentElement.classList.remove("dark")
    }
-   // set localStorage
-   if (id === "system") {
-      localStorage.removeItem("twColorScheme")
+}
+
+const solveAppTheme = async () => {
+   let themeId = ""
+   await solveLocalStorageTheme()
+   if (getThemeFrom.value === "system") {
+      themeId = "system"
+      await solveSystemTheme()
    } else {
-      localStorage.twColorScheme = isDark ? "dark" : "light"
+      themeId = localStorageIsDark.value ? "dark" : "light"
    }
+   await solveClassTheme()
+   const appThemeCur = themeOptions.find((item) => item.id === themeId)
+   appTheme.value = appThemeSchema.parse(appThemeCur)
 }
 
 const openMySite = () => {
@@ -88,30 +114,21 @@ const openMyRepo = () => {
 
 // 🕒Lifecycles
 onMounted(() => {
-   console.log("🛸 > file: CpFooter.vue > onMounted 🖐")
-   const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-   systemTheme.addEventListener("change", (res) => {
-      const isDark = res.matches
-      solveIsDark("system", isDark)
-   })
+   // const themeIdCur = isSystem ? "system" : localStorageContent
+   // const appThemeCur = themeOptions.find((item) => item.id === themeIdCur)
+   // appTheme.value = appThemeSchema.parse(appThemeCur)
 
-   let systemThemeIsDark = systemTheme.matches
-   const localStorageContent = localStorage.getItem("twColorScheme")
-   const isSystem = !localStorageContent
+   // const id = appTheme.value.id
+   // let isDark = null
+   // if (id === "system") {
+   //    isDark = systemThemeIsDark
+   // } else {
+   //    isDark = id === "dark"
+   // }
 
-   // select current theme
-   const themeIdCur = isSystem ? "system" : localStorageContent
-   const themeOptionsCur = themeOptions.find((item) => item.id === themeIdCur)
-   themeSel.value = appThemeSchema.parse(themeOptionsCur)
+   solveAppTheme()
 
-   const id = themeSel.value.id
-   let isDark = null
-   if (id === "system") {
-      isDark = systemThemeIsDark
-   } else {
-      isDark = id === "dark"
-   }
-   solveIsDark(id, isDark)
+   // solveIsDark(id, isDark)
 })
 
 onUpdated(() => {
@@ -130,7 +147,7 @@ onUpdated(() => {
          </button>
 
          <div class="flex items-center justify-between gap-x-3">
-            <Listbox v-model="themeSel">
+            <Listbox v-model="appTheme">
                <div class="relative">
                   <ListboxButton
                      class="flex h-10 items-center justify-center ring-2 ring-slate-400 ring-offset-2 rounded-sm gap-x-2 px-3 py-2">
@@ -156,7 +173,7 @@ onUpdated(() => {
                            <li
                               :class="selected ? 'ring-blue-500' : 'ring-slate-300'"
                               class="flex cursor-pointer bg-slate-50 text-slate-600 h-10 items-center ring-2 ring-offset-2 rounded-sm gap-x-2 px-3 py-2">
-                              <Component :is="theme.iconName" class="h-5 w-5" />
+                              <Component :is="theme.icon" class="h-5 w-5" />
                               <div class="text-b">{{ theme.label }}</div>
                            </li>
                         </ListboxOption>
