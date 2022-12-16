@@ -16,18 +16,31 @@ import {
    BIconClipboardHeart,
 } from "bootstrap-icons-vue"
 
-const systemThemeIsDark = window.matchMedia("(prefers-color-scheme: dark)")
-systemThemeIsDark.addEventListener("change", (res) => {
-   const isDark = res.matches
-   solveIsDark(isDark)
+// 🚀schema
+const themeSchema = z.object({
+   id: z.number().default(-1),
+   system: z.boolean().default(false),
+   dark: z.boolean().default(false),
+   label: z.string().default(""),
 })
 
-// data
+const systemThemeSchema = z.object({
+   matches: z.boolean().default(false),
+})
+
+// ⚡reactive data
+const systemTheme = ref(systemThemeSchema.parse({}))
+console.log("🛸 > file: CpFooter.vue:33 > systemTheme", systemTheme.value)
+
+const themeSel = ref(themeSchema.parse({}))
+console.log("🛸 > file: CpFooter.vue:36 > themeSel", themeSel.value)
+
+// ⭐data
 const themeOptions = [
    {
       index: 0,
       system: true,
-      dark: systemThemeIsDark.matches,
+      dark: systemTheme,
       icon: BIconDisplay,
       label: "Sistema",
    },
@@ -47,21 +60,15 @@ const themeOptions = [
    },
 ]
 
-const themeSchema = z.object({
-   id: z.number().default(-1),
-   system: z.boolean().default(false),
-   dark: z.boolean().default(false),
-   label: z.string().default(""),
-})
-
-let themeSel = ref(themeSchema.parse({}))
-console.log("🛸 > file: CpFooter.vue:52 > themeSel", themeSel.value)
-
 // computed
+const systemIsDark = computed(() => systemTheme.value.matches)
+console.log("🛸 > file: CpFooter.vue:64 > systemIsDark", systemIsDark.value)
+
 const iconType = computed(() => {
    const iconType = themeSel.value.system ? BIconDisplay : BIconChevronUp
    return iconType
 })
+
 const iconTheme = computed(() => {
    const iconTheme = themeSel.value.dark ? BIconMoonStars : BIconSun
    return iconTheme
@@ -85,6 +92,12 @@ const openMyRepo = () => {
 }
 
 onMounted(() => {
+   const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+   systemTheme.addEventListener("change", (res) => {
+      const isDark = res.matches
+      solveIsDark(isDark)
+   })
+
    const localStorageContent = localStorage.getItem("twColorScheme")
    const isSystem = !localStorageContent
    let themeOptionsIndex
