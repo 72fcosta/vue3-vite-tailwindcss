@@ -4,8 +4,8 @@ This template should help get you started developing with Vue3 + Vite + Tailwind
 
 ## Features
 
--  :white_large_square: Typescript
--  :white_large_square: Zod
+-  :white_check_mark: Typescript
+-  :white_check_mark: Zod
 -  :white_check_mark: Vue Router
 -  :white_check_mark: Pinia
 -  :white_check_mark: Axios
