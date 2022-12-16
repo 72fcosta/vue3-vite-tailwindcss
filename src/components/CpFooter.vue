@@ -17,10 +17,11 @@ import {
 } from "bootstrap-icons-vue"
 
 // 🚀Schema
-const themeSchema = z.object({
+const appThemeSchema = z.object({
    id: z.string().default(""),
    system: z.boolean().default(false),
    dark: z.boolean().default(false),
+   iconName: z.string().default(""),
    label: z.string().default(""),
 })
 
@@ -28,62 +29,54 @@ const systemThemeSchema = z.object({
    matches: z.boolean().default(false),
 })
 
+const localStorageThemeSchema = z.object({
+   matches: z.boolean().default(false),
+})
+
 // ⚡Reactive Data
 const systemTheme = ref(systemThemeSchema.parse({}))
-console.log("🛸 > file: CpFooter.vue:33 > systemTheme", systemTheme.value)
-
-const themeSel = ref(themeSchema.parse({}))
-console.log("🛸 > file: CpFooter.vue:36 > themeSel", themeSel.value)
+const localStorageTheme = ref(localStorageThemeSchema.parse({}))
+const themeSel = ref(appThemeSchema.parse({}))
 
 // 🎯Computed
-const systemIsDark = computed(() => systemTheme.value.matches)
-console.log("🛸 > file: CpFooter.vue:40 > systemIsDark", systemIsDark.value)
+const isSystemDark = computed(() => systemTheme.value.matches)
+console.log("🛸 > file: CpFooter.vue > isSystemDark", isSystemDark.value)
+
+const isLocalStorageDark = computed(() => localStorageTheme.value.matches)
+console.log("🛸 > file: CpFooter.vue > isLocalStorageDark", isLocalStorageDark.value)
 
 const btnIconType = computed(() => {
    const btnIconType = themeSel.value.system ? BIconDisplay : BIconChevronUp
    return btnIconType
 })
-console.log("🛸 > file: CpFooter.vue:46 > btnIconType", btnIconType.value)
 
 const iconTheme = computed(() => {
    const iconTheme = themeSel.value.dark ? BIconMoonStars : BIconSun
    return iconTheme
 })
-console.log("🛸 > file: CpFooter.vue:52 > iconTheme", iconTheme.value)
 
 // ⭐Data
 const themeOptions = [
-   {
-      id: "system",
-      system: true,
-      dark: systemIsDark,
-      iconName: "BIconDisplay",
-      label: "Sistema",
-   },
-   {
-      id: "dark",
-      system: false,
-      dark: true,
-      iconName: "BIconMoonStars",
-      label: "Escuro",
-   },
-   {
-      id: "light",
-      system: false,
-      dark: false,
-      iconName: "BIconSun",
-      label: "Claro",
-   },
+   { id: "system", label: "Sistema", iconName: "BIconDisplay" },
+   { id: "dark", label: "Escuro", iconName: "BIconMoonStars" },
+   { id: "light", label: "Claro", iconName: "BIconSun" },
 ]
 
 // 🍄Methods
-const solveIsDark = (isDark: boolean) => {
+const solveIsDark = (id: string, isDark: boolean) => {
+   console.log("🛸 > file: CpFooter.vue:76 > solveIsDark", id, isDark)
+   // set class
    if (isDark) {
       document.documentElement.classList.add("dark")
    } else {
       document.documentElement.classList.remove("dark")
    }
-   if (themeSel.value) themeSel.value.dark = isDark
+   // set localStorage
+   if (id === "system") {
+      localStorage.removeItem("twColorScheme")
+   } else {
+      localStorage.twColorScheme = isDark ? "dark" : "light"
+   }
 }
 
 const openMySite = () => {
@@ -95,35 +88,34 @@ const openMyRepo = () => {
 
 // 🕒Lifecycles
 onMounted(() => {
+   console.log("🛸 > file: CpFooter.vue > onMounted 🖐")
    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
    systemTheme.addEventListener("change", (res) => {
       const isDark = res.matches
-      solveIsDark(isDark)
+      solveIsDark("system", isDark)
    })
 
+   let systemThemeIsDark = systemTheme.matches
    const localStorageContent = localStorage.getItem("twColorScheme")
    const isSystem = !localStorageContent
 
-   let themeOptionsIndex
-   if (isSystem) {
-      themeOptionsIndex = 0
-   } else {
-      themeOptionsIndex = localStorageContent === "dark" ? 1 : 2
-   }
+   // select current theme
+   const themeIdCur = isSystem ? "system" : localStorageContent
+   const themeOptionsCur = themeOptions.find((item) => item.id === themeIdCur)
+   themeSel.value = appThemeSchema.parse(themeOptionsCur)
 
-   themeSel.value = themeSchema.parse(themeOptions[themeOptionsIndex])
-   const isDark = themeSel.value.dark
-   solveIsDark(isDark)
+   const id = themeSel.value.id
+   let isDark = null
+   if (id === "system") {
+      isDark = systemThemeIsDark
+   } else {
+      isDark = id === "dark"
+   }
+   solveIsDark(id, isDark)
 })
 
 onUpdated(() => {
-   const isDark = themeSel.value.dark
-   if (themeSel.value.system) {
-      localStorage.removeItem("twColorScheme")
-   } else {
-      localStorage.twColorScheme = isDark ? "dark" : "light"
-   }
-   solveIsDark(isDark)
+   console.log("🛸 > file: CpFooter.vue > onUpdated 🖐")
 })
 </script>
 
@@ -157,7 +149,7 @@ onUpdated(() => {
                         <ListboxOption
                            v-slot="{ selected }"
                            v-for="theme in themeOptions"
-                           :key="theme.index"
+                           :key="theme.id"
                            :value="theme"
                            as="template"
                            class="my-3">
