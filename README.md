@@ -14,7 +14,7 @@ This template should help get you started developing with Vue3 + Vite + Tailwind
 -  🚀 [Vue Router](https://router.vuejs.org)
 -  🚀 [Pinia](https://pinia.vuejs.org)
 -  🚀 [Bootstrap Icons](https://github.com/tommyip/bootstrap-icons-vue)
--  :white_check_mark: [Icongen](https://github.com/akabekobeko/npm-icon-gen)
+-  🚀 [Icongen](https://github.com/akabekobeko/npm-icon-gen)
 
 ## Ready Configs
 
