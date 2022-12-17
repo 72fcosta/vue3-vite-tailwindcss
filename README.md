@@ -8,12 +8,12 @@ This template should help get you started developing with Vue3 + Vite + Tailwind
 
 ## Features
 
--  :white_check_mark: [Vitest](https://vitest.dev)
--  :white_check_mark: [Typescript](https://www.typescriptlang.org)
--  :white_check_mark: [Zod](https://github.com/colinhacks/zod)
--  :white_check_mark: [Vue Router](https://router.vuejs.org)
--  :white_check_mark: [Pinia](https://pinia.vuejs.org)
--  :white_check_mark: [Bootstrap Icons](https://github.com/tommyip/bootstrap-icons-vue)
+-  🚀 [Vitest](https://vitest.dev)
+-  🚀 [Typescript](https://www.typescriptlang.org)
+-  🚀 [Zod](https://github.com/colinhacks/zod)
+-  🚀 [Vue Router](https://router.vuejs.org)
+-  🚀 [Pinia](https://pinia.vuejs.org)
+-  🚀 [Bootstrap Icons](https://github.com/tommyip/bootstrap-icons-vue)
 -  :white_check_mark: [Icongen](https://github.com/akabekobeko/npm-icon-gen)
 
 ## Ready Configs
