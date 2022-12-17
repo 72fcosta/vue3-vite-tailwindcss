@@ -1,3 +1,7 @@
+<p align='center'>
+<a href="https://vue3-vite-tailwindcss.netlify.app">Live Demo</a>
+</p>
+
 ![gh-cover](https://user-images.githubusercontent.com/25357754/205466563-97a50c70-5e40-4636-b0c8-3a5cdacdc25e.png)
 
 This template should help get you started developing with Vue3 + Vite + Tailwindcss.
@@ -5,10 +9,6 @@ This template should help get you started developing with Vue3 + Vite + Tailwind
 -  ⚡️ Vue Composition API
 -  ⚡️ Tailwind Dark Mode
 -  ⚡️ Remove Unused CSS
-
-<p align='center'>
-<a href="https://vue3-vite-tailwindcss.netlify.app">Live Demo</a>
-</p>
 
 ## Features
 
