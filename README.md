@@ -18,10 +18,10 @@ This template should help get you started developing with Vue3 + Vite + Tailwind
 ## Ready Configs
 
 -  :white_check_mark: Dark Mode
--  :white_check_mark: Prettier
+-  :white_check_mark: [Prettier](https://prettier.io)
 -  :white_check_mark: Eslint
--  :white_check_mark: Cssnano
--  :white_check_mark: Autoprefixer
+-  :white_check_mark: [Css Nano](https://cssnano.co)
+-  :white_check_mark: Css Autoprefixer
 
 ## Recommended IDE Setup
 
