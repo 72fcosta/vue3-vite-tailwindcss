@@ -6,6 +6,10 @@ This template should help get you started developing with Vue3 + Vite + Tailwind
 -  ⚡️ Tailwind Dark Mode
 -  ⚡️ Remove Unused CSS
 
+<p align='center'>
+<a href="https://vue3-vite-tailwindcss.netlify.app">Live Demo</a>
+</p>
+
 ## Features
 
 -  🚀 [Vitest](https://vitest.dev)
