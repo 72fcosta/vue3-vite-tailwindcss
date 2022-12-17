@@ -9,10 +9,9 @@ This template should help get you started developing with Vue3 + Vite + Tailwind
 ## Features
 
 -  :white_check_mark: [Typescript](https://www.typescriptlang.org)
--  :white_check_mark: Zod
--  :white_check_mark: Vue Router
--  :white_check_mark: Pinia
--  :white_check_mark: Axios
+-  :white_check_mark: [Zod](https://github.com/colinhacks/zod)
+-  :white_check_mark: [Vue Router](https://router.vuejs.org)
+-  :white_check_mark: [Pinia](https://pinia.vuejs.org)
 -  :white_check_mark: Prettier
 -  :white_check_mark: Eslint
 -  :white_check_mark: Vitest
