@@ -122,7 +122,7 @@ onMounted(async () => {
 </script>
 
 <template>
-   <footer class="text-slate-50 dark:text-slate-600 bg-slate-300 py-4">
+   <footer class="text-slate-50 dark:text-slate-600 bg-slate-200 py-4">
       <div class="flex items-center justify-between mx-auto max-w-7xl px-2">
          <button
             class="flex h-10 ring-2 ring-slate-400 ring-offset-2 rounded-sm gap-x-2 px-3 py-2"
