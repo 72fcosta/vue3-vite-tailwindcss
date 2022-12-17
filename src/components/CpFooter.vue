@@ -113,6 +113,9 @@ const onSelectAppTheme = async (idTheme: string) => {
 
 // 🕒Lifecycles
 onMounted(async () => {
+   const a = ["lorem", "ipsum", "dolor"]
+   const [...b] = a
+   console.log("🛸 > file: CpFooter.vue:118 > ipsum", b)
    const darkModePreference = window.matchMedia("(prefers-color-scheme: dark)")
    darkModePreference.addEventListener("change", () => {
       solveAppTheme()
