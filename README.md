@@ -3,8 +3,8 @@
 This template should help get you started developing with Vue3 + Vite + Tailwindcss.
 
 -  :white_check_mark: Vue Composition API
+-  :white_check_mark: Tailwind Dark Mode
 -  :white_check_mark: Remove Unused CSS
--  :white_check_mark: Dark Mode
 
 ## Features
 
