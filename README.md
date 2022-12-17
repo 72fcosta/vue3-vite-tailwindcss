@@ -1,8 +1,6 @@
 ![gh-cover](https://user-images.githubusercontent.com/25357754/205466563-97a50c70-5e40-4636-b0c8-3a5cdacdc25e.png)
 
--  [Live Demo](href="https://vue3-vite-tailwindcss.netlify.app)
-
-This template should help get you started developing with Vue3 + Vite + Tailwindcss.
+This template should help get you started developing with Vue3 + Vite + Tailwindcss ([Live Demo](href="https://vue3-vite-tailwindcss.netlify.app)).
 
 -  ⚡️ Vue Composition API
 -  ⚡️ Tailwind Dark Mode
