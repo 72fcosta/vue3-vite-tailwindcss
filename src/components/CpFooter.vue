@@ -22,7 +22,7 @@ const localStorageThemeSchema = z.object({
 })
 
 const systemThemeSchema = z.object({
-   matches: z.boolean().default(false),
+   theme: z.string().nullable().default(null),
 })
 
 const appThemeSchema = z.object({
@@ -44,15 +44,9 @@ const getThemeFrom = computed(() => {
 
 const localStorageIsDark = computed(() => localStorageTheme.value.theme === "dark")
 
-const systemIsDark = computed(() => systemTheme.value.matches)
+const systemIsDark = computed(() => systemTheme.value.theme === "dark")
 
-const appIsDark = computed(() => {
-   if (hasLocalStorageTheme.value) {
-      return localStorageIsDark.value
-   } else {
-      return systemIsDark.value
-   }
-})
+const appIsDark = computed(() => localStorageIsDark.value || systemIsDark.value)
 
 const btnIconType = computed(() => {
    const btnIconType = getThemeFrom.value === "system" ? BIconDisplay : BIconChevronUp
@@ -72,32 +66,34 @@ const themeOptions = [
 
 // 🍄Methods
 const solveLocalStorageTheme = async () => {
-   console.log("🛸 > solveLocalStorageTheme 🖐")
    const find = localStorage.getItem("twColorScheme")
    const res = { theme: find }
    localStorageTheme.value = localStorageThemeSchema.parse(res)
 }
 
 const solveSystemTheme = async () => {
-   console.log("🛸 > solveSystemTheme 🖐")
-   const solvedSystemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-   systemTheme.value = systemThemeSchema.parse(solvedSystemTheme)
+   if (!localStorageTheme.value.theme) {
+      const find = window.matchMedia("(prefers-color-scheme: dark)").matches
+      const res = { theme: find ? "dark" : "light" }
+      systemTheme.value = systemThemeSchema.parse(res)
+   } else {
+      systemTheme.value = systemThemeSchema.parse({ theme: null })
+   }
 }
 
 const solveClassTheme = async () => {
-   console.log("🛸 > solveClassTheme 🖐")
-   if (systemIsDark.value) {
+   if (appIsDark.value) {
       document.documentElement.classList.add("dark")
    } else {
       document.documentElement.classList.remove("dark")
    }
 }
 
-// const solveAppTheme = async () => {
-//    console.log("🛸 > solveAppTheme 🖐")
-//    const appThemeCur = themeOptions.find((item) => item.id === "themeId")
-//    appTheme.value = appThemeSchema.parse(appThemeCur)
-// }
+const solveAppTheme = async () => {
+   await solveLocalStorageTheme()
+   await solveSystemTheme()
+   await solveClassTheme()
+}
 
 const openMySite = () => {
    window.open("https://72fcosta.netlify.app", "_self")
@@ -107,24 +103,21 @@ const openMyRepo = () => {
 }
 
 const onSelectAppTheme = async (idTheme: string) => {
-   console.log("🛸 > onSelectAppTheme 🖐")
    if (idTheme === "system") {
       localStorage.removeItem("twColorScheme")
    } else {
       localStorage.setItem("twColorScheme", idTheme)
    }
-   await solveLocalStorageTheme()
-   await solveSystemTheme()
-   await solveClassTheme()
+   solveAppTheme()
 }
 
 // 🕒Lifecycles
 onMounted(async () => {
-   console.log("🛸 > onMounted 🖐")
-   await solveLocalStorageTheme()
-   await solveSystemTheme()
-   await solveClassTheme()
-   // await solveAppTheme()
+   const darkModePreference = window.matchMedia("(prefers-color-scheme: dark)")
+   darkModePreference.addEventListener("change", () => {
+      solveAppTheme()
+   })
+   solveAppTheme()
 })
 </script>
 
