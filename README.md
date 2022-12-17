@@ -2,11 +2,12 @@
 
 This template should help get you started developing with Vue3 + Vite + Tailwindcss.
 
-## Features
-
 -  :white_check_mark: Vue Composition API
 -  :white_check_mark: Dark Mode Ready
 -  :white_check_mark: Remove Unused CSS
+
+## Features
+
 -  :white_check_mark: Typescript
 -  :white_check_mark: Zod
 -  :white_check_mark: Vue Router
