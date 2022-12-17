@@ -4,6 +4,7 @@ This template should help get you started developing with Vue3 + Vite + Tailwind
 
 -  :white_check_mark: Vue Composition API
 -  :white_check_mark: Remove Unused CSS
+-  :white_check_mark: Dark Mode
 
 ## Features
 
@@ -17,11 +18,10 @@ This template should help get you started developing with Vue3 + Vite + Tailwind
 
 ## Ready Configs
 
--  :white_check_mark: Dark Mode
 -  :white_check_mark: [Prettier](https://prettier.io)
--  :white_check_mark: Eslint
+-  :white_check_mark: [Eslint](https://eslint.vuejs.org)
 -  :white_check_mark: [Css Nano](https://cssnano.co)
--  :white_check_mark: Css Autoprefixer
+-  :white_check_mark: [Css Autoprefixer](https://github.com/postcss/autoprefixer)
 
 ## Recommended IDE Setup
 
